@@ -1,29 +1,22 @@
-﻿const Discord = require('discord.js');
+const Discord = require('discord.js')
 const client = new Discord.Client();
 
-client.on('ready', () => {
-    console.log('I am ready!');
-});
 
 
-var prefix = "$";
+client.on('message', msg => {
 
-client.on("message", message => {
+    if (msg.content == '$join') {
+        if (msg.member.voiceChannel) {
 
-            if (message.content.startsWith(prefix + "obc")) {
-                         if (!message.member.hasPermission("ADMINISTRATOR"))  return;
-  let args = message.content.split(" ").slice(1);
-  var argresult = args.join(' '); 
-  message.guild.members.filter(m => m.presence.status !== 'offline').forEach(m => {
- m.send(`${argresult}\n ${m}`);
+     if (msg.member.voiceChannel.joinable) {
+         msg.member.voiceChannel.join().then(msg.react('white_check_mark'));
+     }
+    }
+}
 })
- message.channel.send(`\`${message.guild.members.filter(m => m.presence.status !== 'online').size}\` : عدد الاعضاء المستلمين`); 
- message.delete(); 
-};     
-}); 
+client.on('ready', () => { //code bot not leave room voice //Bot Is Online
+    client.channels.get("528340816226418704").join(); //by : Lumiz Codes
+    });
 
 
-
-
-
- client.login("NTI4NTE1NTUzMzY3Njg3MTc5.DwjaYw.uE0hCFP_2GdrfPvIWXXDo03-8gk");
+ client.login(process.env.BOT_TOKEN);
